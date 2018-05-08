@@ -1,5 +1,4 @@
 const express = require('express');
-const db = require('../knex/knex.js');
 const router = express.Router();
 const Gallery = require('../db/models/Gallery.js');
 
@@ -15,7 +14,7 @@ router
     return new Gallery({ author, link, description })
       .save()
       .then(gallery => {
-        return res.json(gallery);
+        return res.redirect('gallery-list');
       })
       .catch(err => {
         return res.json({ message: err.message });
