@@ -20,7 +20,7 @@ router
         return res.redirect('gallery-list');
       })
       .catch(err => {
-        return res.json({ message: err.message });
+        return res.status(500).json({ message: err.message });
       });
   });
 
@@ -57,7 +57,18 @@ router
       .catch(err => {
         return res.status(500).json(err);
       });
-  });
+  })
+  .delete((req, res) => {
+    const { id } = req.params;
+    return new Gallery({id})
+      .destroy()
+      .then(gallery => {
+        return res.redirect(`../`)
+      })
+      .catch((err) => {
+        return res.status(500).json(err);
+      })
+  }) 
 
 router.route('/:id/edit').get((req, res) => {
   return res.render('gallery/edit', {});
