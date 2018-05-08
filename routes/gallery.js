@@ -17,7 +17,7 @@ router
     return new Gallery({ author, link, description })
       .save()
       .then(gallery => {
-        return res.redirect('gallery-list');
+        return res.redirect('../');
       })
       .catch(err => {
         return res.status(500).json({ message: err.message });
@@ -60,15 +60,15 @@ router
   })
   .delete((req, res) => {
     const { id } = req.params;
-    return new Gallery({id})
+    return new Gallery({ id })
       .destroy()
       .then(gallery => {
-        return res.redirect(`../`)
+        return res.redirect(`../`);
       })
-      .catch((err) => {
+      .catch(err => {
         return res.status(500).json(err);
-      })
-  }) 
+      });
+  });
 
 router.route('/:id/edit').get((req, res) => {
   return res.render('gallery/edit', {});
