@@ -1,0 +1,30 @@
+{
+  "name": "express-gallery",
+  "version": "1.0.0",
+  "description": "Express Gallery ===============",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jacemi/express-gallery.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jacemi/express-gallery/issues"
+  },
+  "homepage": "https://github.com/jacemi/express-gallery#readme",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "bookshelf": "^0.13.3",
+    "express": "^4.16.3",
+    "express-handlebars": "^3.0.0",
+    "knex": "^0.14.6",
+    "method-override": "^2.3.10",
+    "pg": "^7.4.3"
+  }
+}
