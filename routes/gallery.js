@@ -38,7 +38,7 @@ router
     const { author, link, description } = req.body;
     return new Gallery()
       .where({ id })
-      .set({ author, link, description })
+      .save({ author, link, description }, { method: 'update' })
       .then(gallery => {
         return res.redirect(`/gallery/${id}`);
       })
