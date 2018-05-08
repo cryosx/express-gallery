@@ -1,0 +1,20 @@
+<form action="/gallery/{{id}}?_method=PUT" method="POST">
+
+
+  <label for="author">Author:</label>
+  <input type="text" name="author" id="author" value="{{Author}}"> 
+
+  <label for="link">Link:</label>
+  <input type="text" name="link" id="link" value="{{Link}}">
+
+  <label for="description">Description:</label>
+  <input type="text" name="description" id="description" value="{{Description}}"> 
+
+  <button type="submit">Submit Changes </button>
+</form>
+
+<form action="/gallery/{{id}}?_method=DELETE" method="POST">
+  <button type="submit">Delete Gallery</button>
+</form>
+<a href="/gallery/{{id}}">Back to Gallery Listing</a>
+<a href="/gallery">Back to Gallery Listing</a>
