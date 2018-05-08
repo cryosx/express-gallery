@@ -6,6 +6,8 @@ const router = express.Router();
 router.route('/').get((req, res) => {
   return Gallery.fetchAll()
     .then(gallery => {
+      console.log(gallery);
+      
       return res.json(gallery);
     })
     .catch(err => {

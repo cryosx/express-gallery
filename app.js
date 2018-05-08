@@ -10,6 +10,8 @@ const app = express();
 app.engine('.hbs', handlebars({ extname: '.hbs', defaultLayout: 'main' }));
 app.set('view engine', '.hbs');
 
+
+
 app.use(express.static('public'));
 
 app.use(bodyParser.urlencoded({ extended: true }));
