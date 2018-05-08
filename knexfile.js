@@ -6,9 +6,9 @@ module.exports = {
     client: 'pg',
     connection: {
       host: '127.0.0.1',
-      user: 'bookshelf_demo_user',
-      password: 'password',
-      database: 'bookshelf_demo_db',
+      user: 'express_gallery_user',
+      password: '',
+      database: 'express_gallery',
       charset: 'utf8'
     },
     migrations: {
