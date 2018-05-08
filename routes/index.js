@@ -5,4 +5,4 @@ const router = express.Router();
 
 router.use('/gallery', gallery);
 
-module.exports = router; 
+module.exports = router;
