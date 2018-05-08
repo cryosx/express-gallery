@@ -22,10 +22,10 @@ router
       .catch(err => {
         return res.json({ message: err.message });
       });
-  })
+  });
 
 router.route('/new').get((req, res) => {
-  res.render('new-photo');
+  return res.render('new');
 });
 
 router
