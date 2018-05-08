@@ -29,4 +29,8 @@ router.route('/:id').get((req, res) => {
     });
 });
 
+router.route('/:id/edit').get((req, res) => {
+  return res.render('gallery/edit', {});
+});
+
 module.exports = router;
