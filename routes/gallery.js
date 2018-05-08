@@ -1,5 +1,8 @@
 const express = require('express');
 
+const knex = require('../db/knex.js');
+const Gallery = require('../db/models/Gallery.js');
+
 const router = express.Router();
 
 router
