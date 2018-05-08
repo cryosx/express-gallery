@@ -1,13 +1,26 @@
 const express = require('express');
-
+const db = require('../knex/knex.js');
 const router = express.Router();
+const Gallery = require('../db/models/Gallery.js');
 
 router
   .route('/')
   .get((req, res) => {
     return res.json({ message: 'smoke test' });
   })
-  .post((req, res) => {});
+  .post((req, res) => {
+    let { author, link, description } = req.body;
+    author = author.trim();
+    link = link.trim();
+    return new Gallery({ author, link, description })
+      .save()
+      .then(gallery => {
+        return res.json(gallery);
+      })
+      .catch(err => {
+        return res.json({ message: err.message });
+      });
+  })
 
 router.route('/new').get((req, res) => {
   res.render('new-photo');
