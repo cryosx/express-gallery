@@ -25,7 +25,7 @@ router
   });
 
 router.route('/new').get((req, res) => {
-  return res.render('new');
+  return res.render('gallery/new');
 });
 
 router
