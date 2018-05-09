@@ -1,4 +1,26 @@
-body {
+$primaryFont: Arial, Helvetica, sans-serif;
+$secondaryFont: Verdana, Geneva, sans-serif;
 
-  
+body {
+  margin: 0;
+}
+
+header {
+  border-top: 1px solid black;
+  #header_logo {
+    width: 50vw;
+    height:90px;
+    background-image: url('../assets/logo.jpg');
+    background-position: center;
+    background-size: cover;
+  } 
+  #header_text {
+    border-left: 1px solid black;
+    font-family: $primaryFont;
+  }
+}
+
+#gallery_container {
+  display: flex;
+
 }

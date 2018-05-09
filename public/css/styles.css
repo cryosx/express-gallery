@@ -1,1 +1,11 @@
-/* No CSS */
+body {
+  margin: 0;
+}
+
+header #header_logo {
+  width: 50vw;
+  height: 100px;
+  background-image: url("../assets/logo.jpg");
+  background-position: center;
+  background-size: cover;
+}

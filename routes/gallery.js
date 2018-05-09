@@ -36,10 +36,12 @@ router
       .where({ id })
       .fetch()
       .then(gallery => {
+        console.log('GALLERY!!!!', gallery);
+        console.log('GALLERY ATTRIBUTES!!!', gallery.attributes);
         if (!gallery) {
           throw new Error('Gallery photo not found');
         }
-        return res.json(gallery);
+        return res.render('single-gallery', gallery.attributes);
       })
       .catch(err => {
         return res.status(500).json(err);
