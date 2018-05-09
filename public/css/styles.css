@@ -10,10 +10,6 @@ header {
   border-top: 1px solid #dddddd;
 }
 
-header {
-  border-top: 1px solid black;
-}
-
 header #header_logo {
   width: 85%;
   padding: 16px;
@@ -68,18 +64,4 @@ header #header_text {
   display: -webkit-box;
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
-  width: 50vw;
-  height: 90px;
-  background-image: url('../assets/logo.jpg');
-  background-position: center;
-  background-size: cover;
-}
-
-header #header_text {
-  border-left: 1px solid black;
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-#gallery_container {
-  display: flex;
 }
