@@ -1,10 +1,9 @@
  {{>header}}
-
-<div class="gallery_container">
+<div id="gallery_entry_container">
   {{#each gallery}}
   <div class="gallery_item">
+    <img class="gallery_item_picture" src="{{link}}"></img>
     <div class="gallery_item_author">{{author}}</div>
-    <img src="{{link}}" alt="{{link}}">
     <div class="gallery_item_description">{{description}}</div>
   </div>
   {{/each}}
