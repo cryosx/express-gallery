@@ -6,6 +6,8 @@ const session = require('express-session');
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
 
+const User = require('./db/models/User.js');
+
 const routes = require('./routes');
 
 const app = express();
@@ -25,7 +27,6 @@ app.use(methodOverride('_method'));
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use('/', routes);
 
 // after login
 passport.serializeUser((user, done) => {
@@ -54,27 +55,59 @@ passport.deserializeUser((user, done) => {
         });
 });
 
-passport.use(new LocalStrategy(function (email, password, done) {
-    return new User({ email: username }).fetch()
+passport.use(new LocalStrategy({ usernameField: "email" }, function (email, password, done) {
+    return new User({ email }).fetch()
         .then(user => {
+            if (user === null) { return done(null, false, { message: 'bad email or password' }); }
             user = user.toJSON();
-            console.log(user)
-            if (user === null) {
-                return done(null, false, { message: 'bad email or password' });
-            }
-            else {
-                console.log(password, user.password);
-                if (password === user.password) { return done(null, user); }
-                else {
-                    return done(null, false, { message: 'bad email or password' });
-                }
-            }
+            if (password !== user.password) { return done(null, false, { message: 'bad email or password' }); }
+            return done(null, user);
+
         })
         .catch(err => {
             console.log('error: ', err);
             return done(err);
         });
 }));
+
+app.route('/register')
+    .get((req, res) => {
+        return res.redirect('register.html');
+    })
+    .post((req, res) => {
+        return new User({
+            username: req.body.username,
+            email: req.body.email,
+            password: req.body.password
+        })
+            .save()
+            .then((user) => {
+                console.log(user);
+                return res.redirect('/');
+            })
+            .catch((err) => {
+                console.log(err);
+                return res.send('Stupid email');
+            });
+    });
+
+
+
+app.route('/login')
+    .get((req, res) => {
+        return res.redirect('/login.html');
+    })
+    .post(passport.authenticate('local', {
+        successRedirect: '/secret',
+        failureRedirect: '/login'
+    }));
+
+app.route('/logout').get((req, res) => {
+    req.logout();
+    return res.redirect('/');
+});
+
+app.use('/', routes);
 
 
 module.exports = app;
