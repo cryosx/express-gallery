@@ -18,7 +18,7 @@ module.exports = {
     seeds: {
       directory: path.join(__dirname, 'db/seeds')
     },
-    debug: true
+    // debug: true
   },
 
   staging: {
