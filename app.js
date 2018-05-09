@@ -5,12 +5,17 @@ const methodOverride = require('method-override');
 const session = require('express-session');
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
+const Redis = require('connect-redis')(session);
+const bcrypt = require('bcrypt');
 
 const User = require('./db/models/User.js');
 
 const routes = require('./routes');
 
 const app = express();
+
+const saltedRounds = 12;
+
 
 app.engine('.hbs', handlebars({ extname: '.hbs', defaultLayout: 'main' }));
 app.set('view engine', '.hbs');
@@ -19,6 +24,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(
   session({
+    store: new Redis(),
     secret: 'keyboard cat',
     resave: false,
     saveUninitialized: true
@@ -57,7 +63,7 @@ passport.deserializeUser((user, done) => {
 });
 
 passport.use(
-  new LocalStrategy({ usernameField: 'email' }, function(
+  new LocalStrategy({ usernameField: 'email' }, function   (
     email,
     password,
     done
@@ -69,10 +75,13 @@ passport.use(
           return done(null, false, { message: 'bad email or password' });
         }
         user = user.toJSON();
-        if (password !== user.password) {
-          return done(null, false, { message: 'bad email or password' });
-        }
-        return done(null, user);
+        bcrypt.compare(password, user.password).then(res => {
+          if (res) {
+            return done(null, user);
+          } else {
+            return done(null, false, { message: 'bad usernamr or password' });
+          }
+        });
       })
       .catch(err => {
         console.log('error: ', err);
@@ -87,20 +96,24 @@ app
     return res.redirect('register.html');
   })
   .post((req, res) => {
-    return new User({
-      username: req.body.username,
-      email: req.body.email,
-      password: req.body.password
-    })
-      .save()
-      .then(user => {
-        console.log(user);
-        return res.redirect('/');
-      })
-      .catch(err => {
-        console.log(err);
-        return res.send('Stupid email');
+    bcrypt.genSalt(saltedRounds, function (err, salt) {
+      if (err) console.log(err);
+
+      bcrypt.hash(req.body.password, salt, function (err, hash) {
+        if (err) cnosole.log(err);
+
+        new User({ username: req.body.username, password: hash })
+          .save()
+          .then(user => {
+            console.log(user);
+            return res.redirect('/');
+          })
+          .catch(err => {
+            console.log(err);
+            return res.send('Wrong username');
+          });
       });
+    });
   });
 
 app
