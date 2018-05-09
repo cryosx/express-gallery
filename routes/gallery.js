@@ -32,16 +32,17 @@ router
   .route('/:id')
   .get((req, res) => {
     const { id } = req.params;
-    return new Gallery()
-      .where({ id })
-      .fetch()
+    return Gallery.query(function (qb) {
+      qb.where('id', '>=', id).limit(4)
+    }).fetchAll()
       .then(gallery => {
-        console.log('GALLERY!!!!', gallery);
-        console.log('GALLERY ATTRIBUTES!!!', gallery.attributes);
         if (!gallery) {
           throw new Error('Gallery photo not found');
         }
-        return res.render('single-gallery', gallery.attributes);
+        let galleries = gallery.models.map(val => {
+          return val.attributes
+        })
+        return res.render('gallery-entry', { gallery: galleries })
       })
       .catch(err => {
         return res.status(500).json(err);
