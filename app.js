@@ -50,6 +50,9 @@ passport.deserializeUser((user, done) => {
   new User({ id: user.id })
     .fetch()
     .then(user => {
+      if (user === null) {
+        return done(null, false, { message: 'no user' });
+      }
       user = user.toJSON();
       return done(null, {
         id: user.id,
@@ -57,7 +60,7 @@ passport.deserializeUser((user, done) => {
       });
     })
     .catch(err => {
-      console.log(err);
+      // console.log(err);
       return done(err);
     });
 });
@@ -76,6 +79,7 @@ passport.use(
         }
         user = user.toJSON();
         bcrypt.compare(password, user.password).then(res => {
+          console.log("\n\n\nBCRYPT COMPARE\n\n\n");
           if (res) {
             return done(null, user);
           } else {
@@ -84,7 +88,7 @@ passport.use(
         });
       })
       .catch(err => {
-        console.log('error: ', err);
+        // console.log('error: ', err);
         return done(err);
       });
   })
@@ -100,16 +104,17 @@ app
       if (err) console.log(err);
 
       bcrypt.hash(req.body.password, salt, function (err, hash) {
-        if (err) cnosole.log(err);
+        if (err) console.log(err);
+        const { email, username } = req.body;
 
-        new User({ username: req.body.username, password: hash })
+        new User({ email, username, password: hash })
           .save()
           .then(user => {
-            console.log(user);
+            // console.log(user);
             return res.redirect('/');
           })
           .catch(err => {
-            console.log(err);
+            // console.log(err);
             return res.send('Wrong username');
           });
       });

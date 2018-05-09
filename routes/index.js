@@ -19,6 +19,7 @@ router.route('/').get((req, res) => {
 });
 
 function isAuthenticated(req, res, next) {
+  // console.log(req);
   if (req.isAuthenticated()) { next(); }
   else { res.redirect('/'); }
 };
