@@ -1,7 +1,8 @@
 
 exports.up = function (knex, Promise) {
   return knex.schema.table('gallery', table => {
-    table.integer('user_id').unsigned().notNullable().references('id').inTable('users');
+    table.integer('user_id').unsigned().notNullable()
+    table.foregin('user_id').references('id').inTable('users');
   })
 };
 

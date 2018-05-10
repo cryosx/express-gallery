@@ -25,9 +25,11 @@ router
       });
   });
 
-router.route('/new').get(isAuthenticated, (req, res) => {
-  return res.render('gallery/new');
-});
+router.route('/new')
+  .get(isAuthenticated, (req, res) => {
+    console.log('NEW');
+    return res.render('gallery/new');
+  });
 
 router
   .route('/:id')
@@ -65,6 +67,7 @@ router
       });
   })
   .delete(isAuthorized, (req, res) => {
+    console.log('\n\n\nDELETE\n\n\n');
     const { id } = req.params;
 
     return new Gallery({ id })
@@ -95,8 +98,9 @@ router.route('/:id/edit')
   });
 
 function isAuthenticated(req, res, next) {
-  if (req.isAuthenticated()) next();
-  return res.redirect('/');
+  console.log(req.isAuthenticated());
+  if (!req.isAuthenticated()) return res.redirect('/');
+  return next();
 };
 
 function isAuthorized(req, res, next) {
@@ -109,8 +113,9 @@ function isAuthorized(req, res, next) {
     .where({ id })
     .fetch()
     .then(gallery => {
-      if (gallery === null) return res.render('404', {});
-      if (sessionUser.id !== gallery.user_id) return res.render('401', {});
+      if (gallery === null) return res.status(404).render('404', {});
+      gallery = gallery.toJSON();
+      if (user.id !== gallery.user_id) return res.status(401).render('401', {});
       return next();
     })
     .catch(err => {

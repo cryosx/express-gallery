@@ -6,12 +6,14 @@ const router = express.Router();
 
 
 router.route('/').get((req, res) => {
-  return Gallery.fetchAll()
+  return Gallery.fetchAll({ withRelated: ['poster'] })
     .then(gallery => {
-      let galleries = gallery.models.map(val => {
-        return val.attributes
-      })
-      return res.render('index', { gallery: galleries })
+      console.log(gallery.toJSON());
+      gallery = gallery.toJSON();
+      // let galleries = gallery.models.map(val => {
+      //   return val.attributes
+      // })
+      return res.render('index', { gallery })
     })
     .catch(err => {
       return res.json(err);
