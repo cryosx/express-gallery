@@ -104,7 +104,7 @@ function isAuthenticated(req, res, next) {
 };
 
 function isAuthorized(req, res, next) {
-  if (!req.isAuthenticated()) return res.redirect('/');
+  if (!req.isAuthenticated()) return res.redirect('/login');
 
   const { user } = req;
   const { id } = req.params;
