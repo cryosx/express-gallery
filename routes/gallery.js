@@ -10,8 +10,8 @@ router
   .get((req, res) => {
     return res.json({ message: 'smoke test' });
   })
-  .post((req, res) => {
-    const { user } = req.session.passport
+  .post(isAuthenticated, (req, res) => {
+    const { user } = req
     let { author, link, description } = req.body;
     author = author.trim();
     link = link.trim();
@@ -25,7 +25,7 @@ router
       });
   });
 
-router.route('/new').get((req, res) => {
+router.route('/new').get(isAuthenticated, (req, res) => {
   return res.render('gallery/new');
 });
 
@@ -50,13 +50,10 @@ router
         return res.status(500).json(err);
       });
   })
-  .put((req, res) => {
-    const { user } = req.session.passport
+  .put(isAuthorized, (req, res) => {
     const { id } = req.params;
-
-    if (!isAuthorized(user, id)) return res.status(401).redirect('/');
-
     const { author, link, description } = req.body;
+
     return new Gallery()
       .where({ id })
       .save({ author, link, description }, { method: 'update' })
@@ -67,9 +64,9 @@ router
         return res.status(500).json(err);
       });
   })
-  .delete((req, res) => {
-    const { user } = req.session.passport
+  .delete(isAuthorized, (req, res) => {
     const { id } = req.params;
+
     return new Gallery({ id })
       .destroy()
       .then(gallery => {
@@ -79,17 +76,13 @@ router
         return res.status(500).json(err);
       });
   });
-
 router.route('/:id/edit')
-  .get((req, res) => {
+  .get(isAuthorized, (req, res) => {
     const { id } = req.params;
     return new Gallery({ id })
       .fetch()
       .then(gallery => {
         if (gallery === null) return res.render('404', {});
-
-        const { user } = req.session.passport
-        if (!isAuthorized(user, id)) return res.status(401).render('401', {});
 
         return res.render('gallery/edit', {});
 
@@ -101,19 +94,29 @@ router.route('/:id/edit')
 
   });
 
-function isAuthorized(sessionUser, galleryID) {
+function isAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) next();
+  return res.redirect('/');
+};
+
+function isAuthorized(req, res, next) {
+  if (!req.isAuthenticated()) return res.redirect('/');
+
+  const { user } = req;
+  const { id } = req.params;
+
   return new Gallery()
-    .where({ id: galleryID })
+    .where({ id })
     .fetch()
     .then(gallery => {
-      if (gallery === null) return false;
-      return sessionUser.id === gallery.user_id;
+      if (gallery === null) return res.render('404', {});
+      if (sessionUser.id !== gallery.user_id) return res.render('401', {});
+      return next();
     })
     .catch(err => {
       console.log(err);
-      return false;
+      return next();
     });
-
 }
 
 module.exports = router;
