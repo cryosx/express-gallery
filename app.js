@@ -140,4 +140,9 @@ app.route('/logout').get((req, res) => {
 
 app.use('/', routes);
 
+app.route('*').get((req, res) => {
+  return res.redirect('/');
+});
+
+
 module.exports = app;
