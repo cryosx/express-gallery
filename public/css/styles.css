@@ -1,107 +1,79 @@
 body {
   margin: 0;
-  padding: 0vw 8vw;
-}
+  padding: 0vw 8vw; }
 
 header {
   display: grid;
   grid-template-columns: 60% 40%;
   margin: 50px 0;
-  border-top: 1px solid #dddddd;
-  
-}
-
-header #header_logo {
-  width: 85%;
-  padding: 16px;
-  object-position: center;
-  object-fit: cover;
-  justify-self: center;
-  align-self: center;
-}
-
-header #header_text {
-  margin: 16px 0px;
-  padding: 0 16px;
-  border-left: 1px solid #dddddd;
-  color: #c7c7c7;
-  font-family: arial, verdana, georgia;
-}
+  border-top: 1px solid #dddddd; }
+  header #header_logo {
+    width: 85%;
+    padding: 16px;
+    object-position: center;
+    object-fit: cover;
+    justify-self: center;
+    align-self: center; }
+  header #header_text {
+    margin: 16px 0px;
+    padding: 0 16px;
+    justify-self: center;
+    align-self: center;
+    border-left: 1px solid #dddddd;
+    color: #c7c7c7;
+    font-family: arial, verdana, georgia; }
 
 #gallery_container {
   display: flex;
   flex-wrap: wrap;
-}
-
-#gallery_container div:nth-child(1) {
-  flex-basis: 100%;
-  padding-bottom: 10px;
-  border-bottom: 1px solid #dddddd;
-}
-
-#gallery_container div:nth-child(1) .gallery_item_picture {
-  height: 400px;
-}
-
-#gallery_container div:nth-child(1) :not(.gallery_item_picture) {
-  display: none;
-}
-
-#gallery_container .gallery_item {
-  margin: 8px;
-  flex: 1 1 30%;
-  overflow: hidden;
-}
-
-#gallery_container .gallery_item .gallery_item_picture {
-  width: 100%;
-  height: 250px;
-  object-fit: cover;
-  object-position: center;
-}
-
-#gallery_container .gallery_item :not(.gallery_item_picture) {
-  overflow: hidden;
-  display: -webkit-box;
-  -webkit-line-clamp: 1;
-  -webkit-box-orient: vertical;
-}
+  justify-content: space-evenly; }
+  #gallery_container div:nth-child(1) {
+    flex-basis: 100%;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #dddddd; }
+    #gallery_container div:nth-child(1) .gallery_item_picture {
+      height: 400px; }
+    #gallery_container div:nth-child(1) :not(.gallery_item_picture) {
+      display: none; }
+  #gallery_container .gallery_item {
+    margin: 8px;
+    flex: 0 1 30%;
+    overflow: hidden; }
+    #gallery_container .gallery_item .gallery_item_picture {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+      object-position: center; }
+    #gallery_container .gallery_item :not(.gallery_item_picture) {
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      color: #c7c7c7;
+      font-family: arial, verdana, georgia; }
 
 #gallery_entry_container {
   display: flex;
-  flex-wrap: wrap;
-}
-
-#gallery_entry_container div:nth-child(1) {
-  flex-basis: 100%;
-  padding-bottom: 10px;
-  border-bottom: 1px solid #dddddd;
-}
-
-#gallery_entry_container div:nth-child(1) .gallery_item_picture {
-  height: 400px;
-}
-
-#gallery_entry_container div:nth-child(1) :not(.gallery_item_picture) {
-  display: none;
-}
-
-#gallery_entry_container .gallery_item {
-  margin: 8px;
-  flex: 1 1 30%;
-  overflow: hidden;
-}
-
-#gallery_entry_container .gallery_item .gallery_item_picture {
-  width: 100%;
-  height: 250px;
-  object-fit: cover;
-  object-position: center;
-}
-
-#gallery_entry_container .gallery_item :not(.gallery_item_picture) {
-  overflow: hidden;
-  display: -webkit-box;
-  -webkit-line-clamp: 1;
-  -webkit-box-orient: vertical;
-}
+  flex-wrap: wrap; }
+  #gallery_entry_container div:nth-child(1) {
+    flex-basis: 100%;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #dddddd; }
+    #gallery_entry_container div:nth-child(1) .gallery_item_picture {
+      height: 400px; }
+    #gallery_entry_container div:nth-child(1) :not(.gallery_item_picture) {
+      display: none; }
+  #gallery_entry_container .gallery_item {
+    margin: 8px;
+    flex: 1 1 30%;
+    overflow: hidden; }
+    #gallery_entry_container .gallery_item .gallery_item_picture {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+      object-position: center; }
+    #gallery_entry_container .gallery_item :not(.gallery_item_picture) {
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical; }
