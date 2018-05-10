@@ -37,7 +37,7 @@ router
     const { id } = req.params;
     return Gallery.query(function (qb) {
       qb.where('id', '>=', id).limit(4)
-    }).fetchAll()
+    }).fetchAll({withRelated: ['poster']})
       .then(gallery => {
         if (gallery.length === 0) {
           return res.render('404', {});
