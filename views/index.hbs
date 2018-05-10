@@ -1,10 +1,10 @@
 {{>header}}
 <div id="gallery_container">
   {{#each gallery}}
-  <div class="gallery_item">
+  <a class="gallery_item" href="/gallery/{{id}}">
     <img class="gallery_item_picture" src="{{link}}">
     <div class="gallery_item_author">{{author}}</div>
     <div class="gallery_item_description">{{description}}</div>
-  </div>
+  </a>
   {{/each}}
 </div>

@@ -27,17 +27,17 @@ header {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly; }
-  #gallery_container div:nth-child(1) {
+  #gallery_container a:nth-child(1) {
     flex-basis: 100%;
     padding-bottom: 10px;
     border-bottom: 1px solid #dddddd; }
-    #gallery_container div:nth-child(1) .gallery_item_picture {
+    #gallery_container a:nth-child(1) .gallery_item_picture {
       height: 400px; }
-    #gallery_container div:nth-child(1) :not(.gallery_item_picture) {
+    #gallery_container a:nth-child(1) :not(.gallery_item_picture) {
       display: none; }
   #gallery_container .gallery_item {
     margin: 8px;
-    flex: 0 1 30%;
+    flex: 0 1 31%;
     overflow: hidden; }
     #gallery_container .gallery_item .gallery_item_picture {
       width: 100%;

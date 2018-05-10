@@ -2,7 +2,9 @@
 <div id="gallery_entry_container">
   {{#each gallery}}
   <div class="gallery_item">
-    <img class="gallery_item_picture" src="{{link}}">
+    <a class="gallery_item_picture" href="/gallery/{{id}}">
+      <img src="{{link}}">
+    </a>
     <div class="gallery_item_author">{{author}}</div>
     <div class="gallery_item_description">{{description}}</div>
   </div>
