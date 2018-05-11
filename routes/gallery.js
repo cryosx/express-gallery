@@ -31,22 +31,47 @@ router.route('/new')
     return res.render('gallery/new');
   });
 
+// qb.select('*')
+//   .from('gallery')
+//   .where({ id })
+//   .union(function () {
+//     this.select('*')
+//       .from('gallery')
+//       .where('id', '!=', id)
+//       .orderBy(knex.raw('RANDOM()'))
+//       .limit(4);
+//   })
 router
   .route('/:id')
   .get((req, res) => {
     const { id } = req.params;
-    return Gallery.query(function (qb) {
-      qb.where('id', '>=', id).limit(4)
-    }).fetchAll({withRelated: ['poster']})
+
+    let selectedGallery = new Gallery()
+      .where({ id })
+      .fetch()
       .then(gallery => {
-        if (gallery.length === 0) {
+        return gallery;
+      })
+    let sidebarGalleries = Gallery.query(function (qb) {
+      qb.where('id', '!=', id).limit(3);
+    }).fetchAll()
+      .then(gallery => {
+        return gallery;
+      });
+
+    Promise.all([selectedGallery, sidebarGalleries])
+      .then(galleries => {
+
+        if (galleries === null) {
           return res.render('404', {});
           // throw new Error('Gallery photo not found');
         }
-        gallery = gallery.models.map(val => {
-          return val.attributes
-        })
-        return res.render('gallery-entry', { gallery })
+
+        let selectedGallery = galleries[0].toJSON();
+        let sidebarGalleries = galleries[1].toJSON();
+
+
+        return res.render('gallery-entry', { main: selectedGallery, sidebar: sidebarGalleries })
       })
       .catch(err => {
         return res.status(500).json(err);

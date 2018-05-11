@@ -8,11 +8,8 @@ const router = express.Router();
 router.route('/').get((req, res) => {
   return Gallery.fetchAll({ withRelated: ['poster'] })
     .then(gallery => {
-      console.log(gallery.toJSON());
+      if (gallery === null) throw new Error('Something up');
       gallery = gallery.toJSON();
-      // let galleries = gallery.models.map(val => {
-      //   return val.attributes
-      // })
       return res.render('index', { gallery })
     })
     .catch(err => {
