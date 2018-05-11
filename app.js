@@ -16,8 +16,24 @@ const app = express();
 
 const saltedRounds = 12;
 
+// var hbs = handlebars.create({
+//   // Specify helpers which are only registered on this instance.
+//   helpers: {
+//     isThird: function (index) { return index % 3 === 0; },
+//   }
+// });
 
-app.engine('.hbs', handlebars({ extname: '.hbs', defaultLayout: 'main' }));
+app.engine('.hbs', handlebars({
+  extname: '.hbs', defaultLayout: 'main', helpers: {
+    isThird: function (index, options) {
+      if (index % 3 == 0) {
+        return options.fn(this);
+      } else {
+        return options.inverse(this);
+      }
+    },
+  }
+}));
 app.set('view engine', '.hbs');
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -66,7 +82,7 @@ passport.deserializeUser((user, done) => {
 });
 
 passport.use(
-  new LocalStrategy({ usernameField: 'email' }, function   (
+  new LocalStrategy({ usernameField: 'email' }, function (
     email,
     password,
     done

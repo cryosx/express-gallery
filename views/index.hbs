@@ -5,5 +5,6 @@
     <div class="gallery_item_author">{{author}}</div>
     <div class="gallery_item_description">{{description}}</div>
   </a>
-  {{/each}}
+  {{#isThird @index}}
+  <div class='line_seperator'></div>{{/isThird}} {{/each}}
 </div>
