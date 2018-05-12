@@ -8,7 +8,7 @@ module.exports = {
     connection: {
       host: '127.0.0.1',
       user: 'express_gallery_user',
-      password: '',
+      password: 'password',
       database: 'express_gallery',
       charset: 'utf8'
     },
